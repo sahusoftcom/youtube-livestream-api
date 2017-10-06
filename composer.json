@@ -1,0 +1,23 @@
+{
+    "name": "sahusoftcom/youtube-livestream-api",
+    "description": "PHP (Laravel) Package for Google / YouTube API of Video Live Streaming with Google Auth",
+    "keywords": ["google-api", "youtube-api", "live-streaming", "livestreaming", "laravel", "youtube-api-v3", "google-sdk"],
+    "homepage": "https://github.com/sahusoftcom/youtube-livestream-api",
+    "license": "Sahu Soft India Private Limited",
+    "authors": [
+        {
+            "name": "mukesh201722",
+            "email": "mukesh@sahusoft.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework": "^5.1",
+        "google/apiclient": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SahusoftCom\\YoutubeApi\\": "src/"
+        }
+    }
+}
