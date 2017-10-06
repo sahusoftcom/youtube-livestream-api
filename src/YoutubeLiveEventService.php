@@ -21,29 +21,27 @@ class YoutubeLiveEventService
     protected $googleYoutubeLiveStream;
     protected $googleYoutubeVideoRecordingDetails;
     
-
-
-    function __construct((\Google_Client $client, \Google_Service_YouTube_LiveBroadcastSnippet $googleLiveBroadcastSnippet, \Google_Service_YouTube_LiveBroadcastStatus $googleLiveBroadcastStatus, \Google_Service_YouTube_LiveBroadcast $googleYoutubeLiveBroadcast, \Google_Service_YouTube_LiveStreamSnippet $googleYoutubeLiveStreamSnippet, \Google_Service_YouTube_CdnSettings $googleYoutubeCdnSettings, \Google_Service_YouTube_LiveStream $googleYoutubeLiveStream, \Google_Service_YouTube_VideoRecordingDetails $googleYoutubeVideoRecordingDetails )
+    function __construct()
     {
-        $this->yt_language = \Config::get('google.yt_language');
-        $this->client = $client;
-        $this->client->setClientId(\Config::get('google.client_id'));
-        $this->client->setClientSecret(\Config::get('google.client_secret'));
-        $this->client->setDeveloperKey(\Config::get('google.api_key'));
-        $this->client->setRedirectUri(\Config::get('app.redirect_url'));
+        $this->yt_language = env('google.yt_language');
+        $this->client = new \Google_Client;
+        $this->client->setClientId(env('client_id'));
+        $this->client->setClientSecret(env('client_secret'));
+        $this->client->setDeveloperKey(env('api_key'));
+        $this->client->setRedirectUri(env('app.redirect_url'));
         $this->client->setScopes([
                                      'https://www.googleapis.com/auth/youtube',
                                  ]);
         $this->client->setAccessType('offline');
         $this->client->setPrompt('consent');
-
-        $this->googleLiveBroadcastSnippet = $googleLiveBroadcastSnippet;
-        $this->googleLiveBroadcastStatus = $googleLiveBroadcastStatus;
-        $this->googleYoutubeLiveBroadcast = $googleYoutubeLiveBroadcast;
-        $this->googleYoutubeLiveStreamSnippet = $googleYoutubeLiveStreamSnippet;
-        $this->googleYoutubeCdnSettings = $googleYoutubeCdnSettings;
-        $this->googleYoutubeLiveStream = $googleYoutubeLiveStream;
-        $this->googleYoutubeVideoRecordingDetails = $googleYoutubeVideoRecordingDetails;
+        
+        $this->googleLiveBroadcastSnippet = new \Google_Service_YouTube_LiveBroadcastSnippet;
+        $this->googleLiveBroadcastStatus = new \Google_Service_YouTube_LiveBroadcastStatus;
+        $this->googleYoutubeLiveBroadcast = new \Google_Service_YouTube_LiveBroadcast;
+        $this->googleYoutubeLiveStreamSnippet = new \Google_Service_YouTube_LiveStreamSnippet;
+        $this->googleYoutubeCdnSettings = new \Google_Service_YouTube_CdnSettings;
+        $this->googleYoutubeLiveStream = new \Google_Service_YouTube_LiveStream;
+        $this->googleYoutubeVideoRecordingDetails = new \Google_Service_YouTube_VideoRecordingDetails;
 
     }
 
@@ -52,7 +50,6 @@ class YoutubeLiveEventService
      * [setAccessToken -setting the access token to the client]
      * @param [type] $google_token [googel auth token]
      */
-
     public function setAccessToken($google_token = null)
     {
         try {

@@ -11,12 +11,15 @@ class AuthService
 {	
 	protected $client;
 
-	function __construct(\Google_Client $client)
+	public function __construct()
 	{
-		$this->client = $client;
-		$this->client->setClientId(\Config::get('google.client_id'));
-		$this->client->setClientSecret(\Config::get('google.client_secret'));
-		$this->client->setDeveloperKey(\Config::get('google.api_key'));
+		$this->client = new \Google_Client;
+
+		$this->client->setClientId(env('client_id'));
+		$this->client->setClientSecret(env('client_secret'));
+		$this->client->setDeveloperKey(env('api_key'));
+		$this->client->setRedirectUri(env('redirect_url'));
+
 		$this->client->setScopes([
 		                             'https://www.googleapis.com/auth/youtube',
 		                         ]);
@@ -56,7 +59,7 @@ class AuthService
 	/**
 	 * [getLoginUrl - generates the url login url to generate auth token]
 	 * @param  [type] $youtube_email [account to be authenticated]
-	 * @param  [type] $channelId     [channel to be authorized]
+	 * @param  [type] $channelId     [return identifier]
 	 * @return [type]                [auth url to generate]
 	 */
 	public function getLoginUrl( $youtube_email, $channelId = null )
@@ -65,6 +68,7 @@ class AuthService
 		{	
 			if(!empty($channelId))
 				$this->client->setState($channelId);
+
 			$this->client->setLoginHint($youtube_email);
 			$authUrl = $this->client->createAuthUrl();
 			return $authUrl;
