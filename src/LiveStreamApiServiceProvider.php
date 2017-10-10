@@ -1,6 +1,6 @@
 <?php
 
-namespace Mukesh\LiveStreamApi;
+namespace sahusoftcom\LiveStreamApi;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +13,7 @@ class LiveStreamApiServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishes(array(__DIR__ . '/config/google.php' => config_path('google.php')));
     }
 
     /**
@@ -23,6 +23,6 @@ class LiveStreamApiServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
     }
 }

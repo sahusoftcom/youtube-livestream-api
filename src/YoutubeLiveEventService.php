@@ -1,5 +1,5 @@
 <?php 
-namespace Mukesh\LiveStreamApi;
+namespace sahusoftcom\LiveStreamApi;
 
 use Log;
 use Exception;
@@ -23,12 +23,12 @@ class YoutubeLiveEventService
     
     function __construct()
     {
-        $this->yt_language = env('google.yt_language');
+        $this->yt_language = \Config::get('google.yt_language');
         $this->client = new \Google_Client;
-        $this->client->setClientId(env('client_id'));
-        $this->client->setClientSecret(env('client_secret'));
-        $this->client->setDeveloperKey(env('api_key'));
-        $this->client->setRedirectUri(env('app.redirect_url'));
+        $this->client->setClientId(\Config::get('client_id'));
+        $this->client->setClientSecret(\Config::get('client_secret'));
+        $this->client->setDeveloperKey(\Config::get('api_key'));
+        $this->client->setRedirectUri(\Config::get('app.redirect_url'));
         $this->client->setScopes([
                                      'https://www.googleapis.com/auth/youtube',
                                  ]);
@@ -370,7 +370,7 @@ class YoutubeLiveEventService
      * [transitionEvent transition the state of event [test, start streaming , stop streaming]]
      * @param  [type] $token            [auth token for the channel]
      * @param  [type] $youtube_event_id [eventId]
-     * @param  [type] $broadcastStatus  [transition state - ["testing","complete","testStarting"]]
+     * @param  [type] $broadcastStatus  [transition state - ["testing", "live", "complete"]]
      * @return [type]                   [transition status]
      */
     public function transitionEvent($token, $youtube_event_id, $broadcastStatus)
