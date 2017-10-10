@@ -90,10 +90,18 @@ $data = array(
 
 $ytEventObj = new YoutubeLiveEventService();
 /**
-* The broadcast response give details of the youtube_event_id,server_url and server_key(it needs to be saved), along with other details about event..
-* using this information you will need to supply video stream to youtube for live streaming using encoder of your choice. 
-*/
-$ytEventObj->broadcast($authToken, $data);
+ * The broadcast function returns array of details from YouTube.
+ * Store this information & will be required to supply to youtube 
+ * for live streaming using encoder of your choice. 
+ */
+$response = $ytEventObj->broadcast($authToken, $data);
+if ( !empty($response) ) {
+
+	$youtubeEventId = $response['broadcast_response']['id'];
+	$serverUrl = $response['stream_response']['cdn']->ingestionInfo->ingestionAddress;
+	$serverKey = $response['stream_response']['cdn']->ingestionInfo->streamName;
+}
+
 ```
 
 #### Updating a Youtube Event:
@@ -109,9 +117,13 @@ use  SahusoftCom\YoutubeApi\YoutubeLiveEventService;	// Add Code to call the api
 $ytEventObj = new YoutubeLiveEventService();
 /**
 * The updateBroadcast response give details of the youtube_event_id,server_url and server_key. 
-* The server_url and server_key gets updated in the process. (save the updated server_key and server_url).
+* The server_url & server_key gets updated in the process. (save the updated server_key and server_url).
 */
-$ytEventObj->updateBroadcast($authToken, $data, $youtube_event_id);
+$response = $ytEventObj->updateBroadcast($authToken, $data, $youtubeEventId);
+
+// $youtubeEventId = $response['broadcast_response']['id'];
+// $serverUrl = $response['stream_response']['cdn']->ingestionInfo->ingestionAddress;
+// $serverKey = $response['stream_response']['cdn']->ingestionInfo->streamName
 ```
 
 #### Deleting a Youtube Event:
@@ -128,10 +140,11 @@ $ytEventObj = new YoutubeLiveEventService();
 /**
  * Deleting the event requires authentication token for the channel in which the event is created and the youtube_event_id
  */
-$ytEventObj->deleteEvent($authToken, $youtube_event_id);
+$ytEventObj->deleteEvent($authToken, $youtubeEventId);
 ```
 
 #### Starting a Youtube Event Stream:
+
 ```php
 <?php
 namespace Your\App\NameSpace;
@@ -144,11 +157,12 @@ $ytEventObj = new YoutubeLiveEventService();
 /**
  * $broadcastStatus - ["testing", "live"]
  * Starting the event takes place in 3 steps
- * 1. You start sending the stream to the server_url via server_key recieved as a response in creating the event using encoder of your choice.
- * 2. After starting to send the stream. Stream test is done by passing broadcastStatus="testing" and it will give response for stream status
- * 3. If Stream test is succesfull. We start live streaming the video by passing broadcastStatus="live" and in response it will give us the stream status.
+ * 1. Start sending the stream to the server_url via server_key recieved as a response in creating the event via the encoder of your choice.
+ * 2. Once stream sending has started, stream test should be done by passing $broadcastStatus="testing" & it will return response for stream status.
+ * 3. If transitioEvent() returns successfull for testing broadcast status, then start live streaming your video by passing $broadcastStatus="live" 
+ * & in response it will return us the stream status.
  */ 
-$ytEventObj->transitionEvent($authToken, $broadcastStatus);	
+$streamStatus = $ytEventObj->transitionEvent($authToken, $broadcastStatus);	
 ```
 
 #### Stopping a Youtube Event Stream:

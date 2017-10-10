@@ -67,18 +67,16 @@ class YoutubeLiveEventService
             return !$this->client->isAccessTokenExpired();
 
         } catch ( \Google_Service_Exception $e ) {
-            Log::info('--------- GOOGLE SERVICE EXCEPTION ------------');
-            Log::info($e->getMessage());
+            
+            throw new Exception($e->getMessage(), 1);
 
         } catch ( \Google_Exception $e ) {
 
-            Log::info('--------- GOOGLE EXCEPTION ------------');
-            Log::info($e->getMessage());
+            throw new Exception($e->getMessage(), 1);
         
         } catch(Exception $e) {
 
-            Log::info('----------------Exception--------------');
-            Log::info($e->getMessage());
+            throw new Exception($e->getMessage(), 1);
         }
     }
 
@@ -186,9 +184,6 @@ class YoutubeLiveEventService
             $updateResponse = $youtube->videos->update("snippet", $video);
             $response['video_response'] = $updateResponse;
 
-            Log::info('----------- Update RESPONSE ------------');
-            Log::info(json_encode($updateResponse));
-
             /**
              * object of livestream resource [snippet][title]
              */
@@ -216,9 +211,6 @@ class YoutubeLiveEventService
             $streamsResponse = $youtube->liveStreams->insert('snippet,cdn', $this->googleYoutubeLiveStream, array());
             $response['stream_response'] = $streamsResponse;
 
-            Log::info('-------------- STREAM RESPONSE -------------');
-            Log::info(json_encode($streamsResponse));
-
             /**
              * Bind the broadcast to the live stream
             /**
@@ -239,19 +231,16 @@ class YoutubeLiveEventService
 
         } catch ( \Google_Service_Exception $e ) {
 
-            Log::info('--------- GOOGLE SERVICE EXCEPTION ------------');
-            Log::info($e->getMessage());
+            throw new Exception($e->getMessage(), 1);
 
         } catch ( \Google_Exception $e ) {
 
 
-            Log::info('--------- GOOGLE EXCEPTION ------------');
-            Log::info($e->getMessage());
+            throw new Exception($e->getMessage(), 1);
         
         } catch(Exception $e) {
 
-            Log::info('--------- EXCEPTION ------------');
-            Log::info($e->getMessage());
+            throw new Exception($e->getMessage(), 1);
         }
 
     }
@@ -320,8 +309,7 @@ class YoutubeLiveEventService
 
             } catch( \Google_Exception $e ) {
 
-                Log::info('--------- GOOGLE EXCEPTION WHILE UPLOADING THUMBNAIL ------------');
-                Log::info($e->getMessage());
+                throw new Exception($e->getMessage(), 1);
             }
         }
     }
@@ -360,8 +348,7 @@ class YoutubeLiveEventService
                 $updateResponse = $youtube->videos->update("snippet", $video);
 
             } catch( \Google_Exception $e ){
-                Log::info('--------- GOOGLE EXCEPTION WHILE UPDATING TAGS ------------');
-                Log::info($e->getMessage());
+                throw new Exception($e->getMessage(), 1);
             }
         }
     }
@@ -401,13 +388,11 @@ class YoutubeLiveEventService
 
         } catch( \Google_Exception $e ) {
 
-            Log::info('--------- GOOGLE EXCEPTION WHILE TRANSITION ------------');
-            Log::info($e->getMessage());
+            throw new Exception($e->getMessage(), 1);
 
         } catch(Exception $e){
 
-            Log::info('---------  EXCEPTION ------------');
-            Log::info($e->getMessage());
+            throw new Exception($e->getMessage(), 1);
         }
     }
 
@@ -560,9 +545,6 @@ class YoutubeLiveEventService
             $streamsResponse = $youtube->liveStreams->insert('snippet,cdn', $this->googleYoutubeLiveStream, array());
             $response['stream_response'] = $streamsResponse;
 
-            Log::info('-------------- STREAM RESPONSE -------------');
-            Log::info(json_encode($streamsResponse));
-
             /**
              * Bind the broadcast to the live stream
              */
@@ -573,24 +555,20 @@ class YoutubeLiveEventService
                 ));
 
             $response['bind_broadcast_response'] = $bindBroadcastResponse;
-            Log::info('------------ BIND BROADCAST RESPONSE -------------');
-            Log::info(json_encode($bindBroadcastResponse));
 
             return $response;
 
         } catch ( \Google_Service_Exception $e ) {
-            Log::info('--------- GOOGLE SERVICE EXCEPTION ------------');
-            Log::info($e->getMessage());
+
+            throw new Exception($e->getMessage(), 1);
 
         } catch ( \Google_Exception $e ) {
 
-            Log::info('--------- GOOGLE EXCEPTION ------------');
-            Log::info($e->getMessage());
+            throw new Exception($e->getMessage(), 1);
         
         } catch(Exception $e) {
 
-            Log::info('----------------Exception--------------');
-            Log::info($e->getMessage());
+            throw new Exception($e->getMessage(), 1);
         }
 
     }
@@ -616,22 +594,20 @@ class YoutubeLiveEventService
              */         
             $youtube = new \Google_Service_YouTube($this->client);
             $deleteBroadcastsResponse = $youtube->liveBroadcasts->delete($youtube_event_id);
+            
             return $deleteBroadcastsResponse;
                 
         } catch ( \Google_Service_Exception $e ) {
-            Log::info('--------- GOOGLE SERVICE EXCEPTION ------------');
-            Log::info($e->getMessage());
+
+            throw new Exception($e->getMessage(), 1);
 
         } catch ( \Google_Exception $e ) {
 
-            Log::info('--------- GOOGLE EXCEPTION ------------');
-            Log::info($e->getMessage());
+            throw new Exception($e->getMessage(), 1);
         
         } catch(Exception $e) {
 
-            Log::info('----------------Exception--------------');
-            Log::info($e->getMessage());
+            throw new Exception($e->getMessage(), 1);
         }
     }
-
 }
