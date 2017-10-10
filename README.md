@@ -33,7 +33,7 @@ php artisan vendor:publish --tag='youtube-config'
 9. You will get values (to be exact - client_id, client_secret & api_key) 
 10. Now add these values - client_id, client_secret, api_key and login_callback in the env file.
 
-### Setting Up the App:
+## Setting Up the App:
 
 #### Authentication and Authorization:
 
@@ -138,7 +138,7 @@ $ytEventObj = new YoutubeLiveEventService();
 $ytEventObj->transitionEvent($authToken, $broadcastStatus);	
 ```
 
-#### Stopping a Youtube Event Stream
+#### Stopping a Youtube Event Stream:
 
 ```php
 <?php
