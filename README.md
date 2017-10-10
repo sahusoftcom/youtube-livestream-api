@@ -50,7 +50,7 @@ $authUrl = $authServiceObject->getLoginUrl;
 ```
 
 * Now you will get $authUrl, upon redirecting to the same will ask permissions and authorization access to the required channel.
-* Upon submitting the requirements, you'll get a authcode on the loginCallback URL (redirect url added as in google console) & you might have specified in .env file.
+* Upon submitting the requirements, you'll get a $authcode on the loginCallback URL (redirect url added as in google console) & you might have specified in .env file.
 * Use this authcode to generate auth token as follows:
 
 ```php
@@ -75,6 +75,19 @@ use  SahusoftCom\YoutubeApi\YoutubeLiveEventService;	// Add Code to call the api
 ```
 
 ```php
+
+$data = array(
+	"title" => "",
+	"description" => "",
+	"thumbnail_path" => "",					// Optional
+	"event_start_date_time" => "",
+	"event_end_date_time" => "",			// Optional
+	"time_zone" => "",
+	'privacy_status' => "",					// default: "public" OR "private"
+	"language_name" => "",					// default: "English"
+	"tag_array" => ""						// Optional and should not be more than 500 characters
+);
+
 $ytEventObj = new YoutubeLiveEventService();
 /**
 * The broadcast response give details of the youtube_event_id,server_url and server_key(it needs to be saved), along with other details about event..

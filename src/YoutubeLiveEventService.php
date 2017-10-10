@@ -448,6 +448,7 @@ class YoutubeLiveEventService
             $startdt = Carbon::createFromFormat('Y-m-d H:i:s', $data['event_start_date_time'], $data['time_zone']);
             $startdt = ($startdt < Carbon::now($data['time_zone'])) ? Carbon::now($data['time_zone']) : $startdt;
             $startdtIso = $startdt->toIso8601String();
+            $privacy_status = isset($data['privacy_status']) ? $data['privacy_status'] : "public";
 
             /**
              * parsing event end date
@@ -477,7 +478,7 @@ class YoutubeLiveEventService
             /** 
              * Create an object for the liveBroadcast resource's status ["private, public or unlisted".]
              */
-            $this->googleLiveBroadcastStatus->setPrivacyStatus('public');
+            $this->googleLiveBroadcastStatus->setPrivacyStatus($privacy_status);
 
             /**
              * Create the API request  [inserts the liveBroadcast resource.]
