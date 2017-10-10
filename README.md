@@ -79,13 +79,13 @@ use  SahusoftCom\YoutubeApi\YoutubeLiveEventService;	// Add Code to call the api
 $data = array(
 	"title" => "",
 	"description" => "",
-	"thumbnail_path" => "",					// Optional
+	"thumbnail_path" => "",				// Optional
 	"event_start_date_time" => "",
 	"event_end_date_time" => "",			// Optional
 	"time_zone" => "",
-	'privacy_status' => "",					// default: "public" OR "private"
-	"language_name" => "",					// default: "English"
-	"tag_array" => ""						// Optional and should not be more than 500 characters
+	'privacy_status' => "",				// default: "public" OR "private"
+	"language_name" => "",				// default: "English"
+	"tag_array" => ""				// Optional and should not be more than 500 characters
 );
 
 $ytEventObj = new YoutubeLiveEventService();
