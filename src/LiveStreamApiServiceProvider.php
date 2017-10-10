@@ -1,6 +1,6 @@
 <?php
 
-namespace sahusoftcom\LiveStreamApi;
+namespace sahusoftcom\YoutubeApi;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +13,7 @@ class LiveStreamApiServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes(array(__DIR__ . '/config/google.php' => config_path('google.php')));
+        $this->publishes(array(__DIR__ . '/config/google.php' => config_path('google.php')),'youtube-config');
     }
 
     /**

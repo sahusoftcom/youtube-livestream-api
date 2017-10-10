@@ -14,7 +14,7 @@ SahusoftCom\YoutubeApi\LiveStreamApiServiceProvider::class
 
 Execute the following command to get the configurations:
 ```shell
-php artisan vendor:publish --provider="SahusoftCom\YoutubeApi\LiveStreamApiServiceProvider"
+php artisan vendor:publish --tag='youtube-config'
 ```
 
 ## Steps to create your google oauth credentials:

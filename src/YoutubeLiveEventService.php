@@ -1,5 +1,5 @@
 <?php 
-namespace sahusoftcom\LiveStreamApi;
+namespace sahusoftcom\YoutubeApi;
 
 use Log;
 use Exception;
