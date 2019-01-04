@@ -365,7 +365,7 @@ class YoutubeLiveEventService
         try{
 
             if( empty($token) ){
-                Log::info("token can't be empty")
+                Log::info("token can't be empty");
                 return false;
             }
 
