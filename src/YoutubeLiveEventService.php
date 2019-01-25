@@ -152,7 +152,7 @@ class YoutubeLiveEventService
             $response['broadcast_response'] = $broadcastsResponse;
 
             $youtube_event_id = $broadcastsResponse['id'];
-
+            sleep(5);
             /**
              * set thumbnail to the event
              */
@@ -197,14 +197,14 @@ class YoutubeLiveEventService
 
             /** 
              * API request [inserts liveStream resource.]
-            /** 
+             * 
              * API request [inserts liveStream resource.]
              */
             $this->googleYoutubeLiveStream->setSnippet($this->googleYoutubeLiveStreamSnippet);
             $this->googleYoutubeLiveStream->setCdn($this->googleYoutubeCdnSettings);
             $this->googleYoutubeLiveStream->setKind('youtube#liveStream');
 
-            /*
+            
             /**
              * execute the insert request [return an object that contains information about new stream]
              */
@@ -213,7 +213,7 @@ class YoutubeLiveEventService
 
             /**
              * Bind the broadcast to the live stream
-            /**
+             *
              * Bind the broadcast to the live stream
              */
             $bindBroadcastResponse = $youtube->liveBroadcasts->bind(
