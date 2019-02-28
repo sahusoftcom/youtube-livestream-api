@@ -1,18 +1,21 @@
 # sahusoftcom/youtube-livestream-api:
+
 PHP (Laravel) Package for Google / YouTube API of Video Live Streaming with Google Auth
 
 ## Installation :
- 
+
 ```shell
 composer require sahusoftcom/youtube-livestream-api
 ```
 
 Add Service provider to config/app.php provider's array:
+
 ```php
 SahusoftCom\YoutubeApi\LiveStreamApiServiceProvider::class
 ```
 
 Execute the following command to get the configurations:
+
 ```shell
 php artisan vendor:publish --tag='youtube-config'
 ```
@@ -22,16 +25,16 @@ php artisan vendor:publish --tag='youtube-config'
 1. Goto `https://console.developers.google.com`
 2. Login with your credentials & then create a new project.
 3. Enable the following features while creating key
-	- Youtube Data API
-	- Youtube Analytics API
-	- Youtube Reporting API
+   - Youtube Data API
+   - Youtube Analytics API
+   - Youtube Reporting API
 4. Then create `API key` from credentials tab.
-5. Then in OAuth Consent Screen enter the `product name`(your site name). 
+5. Then in OAuth Consent Screen enter the `product name`(your site name).
 6. create credentials > select OAuth Client ID. (here you will get client_id and client_secret)
 7. Then in the Authorized Javascript Origins section add `you site url`.
-8. In the Authorized Redirect URLs section add `add a url which you want the auth code to return`(login callback)
-9. You will get values (to be exact - client_id, client_secret & api_key) 
-10. Now add these values - client_id, client_secret, api_key and login_callback in the env file.
+8. In the Authorized Redirect URLs section add `add a url which you want the auth code to return`(redirect_url)
+9. You will get values (to be exact - client_id, client_secret, api_key, redirect_url)
+10. Now add these values - client_id, client_secret, api_key and redirect_url in the env file.
 
 ## Setting Up the App:
 
@@ -48,12 +51,12 @@ use  SahusoftCom\YoutubeApi\AuthService;	// Add Code to call the api class
 $authServiceObject = new AuthService();
 
 # Replace the identifier with a unqiue identifier for account or channel
-$authUrl = $authServiceObject->getLoginUrl('email','identifier'); 
+$authUrl = $authServiceObject->getLoginUrl('email','identifier');
 ```
 
-* Now you will get $authUrl, upon redirecting to the same will ask permissions and authorization access to the required channel.
-* Upon submitting the requirements, you'll get a $authcode on the loginCallback URL (redirect url added as in google console) & you might have specified in .env file.
-* Use this authcode to generate auth token as follows:
+- Now you will get \$authUrl, upon redirecting to the same will ask permissions and authorization access to the required channel.
+- Upon submitting the requirements, you'll get a \$authcode on the loginCallback URL (redirect url added as in google console) & you might have specified in .env file.
+- Use this authcode to generate auth token as follows:
 
 ```php
 <?php
@@ -93,8 +96,8 @@ $data = array(
 $ytEventObj = new YoutubeLiveEventService();
 /**
  * The broadcast function returns array of details from YouTube.
- * Store this information & will be required to supply to youtube 
- * for live streaming using encoder of your choice. 
+ * Store this information & will be required to supply to youtube
+ * for live streaming using encoder of your choice.
  */
 $response = $ytEventObj->broadcast($authToken, $data);
 if ( !empty($response) ) {
@@ -118,7 +121,7 @@ use  SahusoftCom\YoutubeApi\YoutubeLiveEventService;	// Add Code to call the api
 ```php
 $ytEventObj = new YoutubeLiveEventService();
 /**
-* The updateBroadcast response give details of the youtube_event_id,server_url and server_key. 
+* The updateBroadcast response give details of the youtube_event_id,server_url and server_key.
 * The server_url & server_key gets updated in the process. (save the updated server_key and server_url).
 */
 $response = $ytEventObj->updateBroadcast($authToken, $data, $youtubeEventId);
@@ -161,10 +164,10 @@ $ytEventObj = new YoutubeLiveEventService();
  * Starting the event takes place in 3 steps
  * 1. Start sending the stream to the server_url via server_key recieved as a response in creating the event via the encoder of your choice.
  * 2. Once stream sending has started, stream test should be done by passing $broadcastStatus="testing" & it will return response for stream status.
- * 3. If transitioEvent() returns successfull for testing broadcast status, then start live streaming your video by passing $broadcastStatus="live" 
+ * 3. If transitioEvent() returns successfull for testing broadcast status, then start live streaming your video by passing $broadcastStatus="live"
  * & in response it will return us the stream status.
- */ 
-$streamStatus = $ytEventObj->transitionEvent($authToken, $broadcastStatus);	
+ */
+$streamStatus = $ytEventObj->transitionEvent($authToken, $broadcastStatus);
 ```
 
 #### Stopping a Youtube Event Stream:
