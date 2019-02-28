@@ -46,7 +46,9 @@ use  SahusoftCom\YoutubeApi\AuthService;	// Add Code to call the api class
 
 ```php
 $authServiceObject = new AuthService();
-$authUrl = $authServiceObject->getLoginUrl;
+
+# Replace the identifier with a unqiue identifier for account or channel
+$authUrl = $authServiceObject->getLoginUrl('email','identifier'); 
 ```
 
 * Now you will get $authUrl, upon redirecting to the same will ask permissions and authorization access to the required channel.
