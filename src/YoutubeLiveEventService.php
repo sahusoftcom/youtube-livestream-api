@@ -479,7 +479,6 @@ class YoutubeLiveEventService
             $broadcastsResponse = $youtube->liveBroadcasts->update('snippet,status',
                 $this->googleYoutubeLiveBroadcast, array());
 
-            $youtube_event_id = $obj->youtube_event_id ;
 
             /**
              * set thumbnail
